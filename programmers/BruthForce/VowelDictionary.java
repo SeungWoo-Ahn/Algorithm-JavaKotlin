@@ -14,14 +14,7 @@ public class VowelDictionary {
      */
     static int solution(String word) {
         makeDictionary("", 0);
-        int answer = 0;
-        for(int i = 0; i < dictionary.size(); i++) {
-            if(dictionary.get(i).equals(word)) {
-                answer = i;
-                break;
-            }
-        }
-        return answer;
+        return dictionary.indexOf(word) + 1;
     }
 
     static void makeDictionary(String str, int len) {
