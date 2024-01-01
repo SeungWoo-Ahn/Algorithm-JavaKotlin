@@ -1,4 +1,4 @@
-package programmers.Practive.Level2
+package programmers.Practice.Level2
 
 class TrimSqrt2Array {
     fun solution(n: Int, left: Long, right: Long): IntArray {

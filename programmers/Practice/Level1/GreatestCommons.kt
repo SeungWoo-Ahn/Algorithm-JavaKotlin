@@ -1,4 +1,4 @@
-package programmers.Practive.Level1
+package programmers.Practice.Level1
 
 class GreatestCommons {
     fun solution(n: Int, m: Int): IntArray {

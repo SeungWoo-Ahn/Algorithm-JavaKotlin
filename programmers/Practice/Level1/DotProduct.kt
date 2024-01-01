@@ -1,4 +1,4 @@
-package programmers.Practive.Level1
+package programmers.Practice.Level1
 
 class DotProduct {
     fun solution(a: IntArray, b: IntArray): Int {

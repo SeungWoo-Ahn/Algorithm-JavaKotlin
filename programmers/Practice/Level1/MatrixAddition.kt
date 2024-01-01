@@ -1,4 +1,4 @@
-package programmers.Practive.Level1
+package programmers.Practice.Level1
 
 class MatrixAddition {
     fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {

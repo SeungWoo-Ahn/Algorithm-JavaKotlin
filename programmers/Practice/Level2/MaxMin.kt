@@ -1,4 +1,4 @@
-package programmers.Practive.Level2
+package programmers.Practice.Level2
 
 class MaxMin {
     fun solution(s: String): String {
