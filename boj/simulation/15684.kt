@@ -6,7 +6,7 @@ class `15684` {
     private var n = 0
     private var m = 0
     private var h = 0
-    private var minCnt = 0
+    private var minCnt = -1
     private var map: Array<BooleanArray> = arrayOf()
 
     private fun dfs(depth: Int, max: Int) {
