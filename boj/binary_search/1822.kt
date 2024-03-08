@@ -23,8 +23,28 @@ class `1822` {
         }
         println("$cnt\n$sb")
     }
+    fun solutionWithBinarySearch() = with(System.`in`.bufferedReader()) {
+        val (nA, nB) = readLine().split(" ").map { it.toInt() }
+        val arrA = IntArray(nA)
+        val arrB = IntArray(nB)
+        var st = StringTokenizer(readLine())
+        repeat(nA) { arrA[it] = st.nextToken().toInt() }
+        st = StringTokenizer(readLine())
+        repeat(nB) { arrB[it] = st.nextToken().toInt() }
+        arrA.sort()
+        arrB.sort()
+        var cnt = 0
+        val sb = StringBuilder()
+        for (a in arrA) {
+            if (arrB.binarySearch(a) < 0) {
+                cnt++
+                sb.append("$a ")
+            }
+        }
+        println("$cnt\n$sb")
+    }
 }
 
 fun main() {
-    `1822`().solutionWithMap()
+    `1822`().solutionWithBinarySearch()
 }
