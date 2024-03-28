@@ -12,7 +12,6 @@ class `16236` {
     private var map: Array<IntArray> = arrayOf()
     private val shark = Shark()
     private val d = listOf(Node(-1, 0), Node(0, -1), Node(0, 1), Node(1, 0))
-    private var cnt = 0
     private var time = 0
 
     private fun bfs(visited: Array<BooleanArray> = Array(map.size) { BooleanArray(map.size) }): Boolean {
@@ -45,15 +44,14 @@ class `16236` {
     }
 
     private fun eat(node: Node) {
+        map[node.x][node.y] = 0
         time += node.dis
         shark.x = node.x.also { shark.y = node.y }
-        cnt--
         shark.eat++
         if (shark.eat == shark.size) {
             shark.size++
             shark.eat = 0
         }
-        map[node.x][node.y] = 0
     }
 
     fun solution() = with(System.`in`.bufferedReader()) {
@@ -67,15 +65,11 @@ class `16236` {
                     shark.x = x
                     shark.y = y
                     num = 0
-                } else if (num != 0) {
-                    cnt++
                 }
                 num
             }
         }
-        while (true) {
-            if (cnt == 0 || !bfs()) break
-        }
+        while (true) { if (!bfs()) break }
         println(time)
     }
 }
