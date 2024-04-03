@@ -8,7 +8,7 @@ import java.util.StringTokenizer
 class `17837` {
     private data class Node(val x: Int, val y: Int)
     private data class Piece(val num: Int, var dir: Int, var pos: Node)
-    private data class Square(val color: Int, val pieces: ArrayDeque<Piece> = ArrayDeque())
+    private data class Square(val color: Int, val pieces: Stack<Piece> = Stack())
 
     private var board: Array<Array<Square>> = arrayOf()
     private var pieces: Array<Piece> = arrayOf()
@@ -18,6 +18,8 @@ class `17837` {
         Node(-1, 0),
         Node(1, 0)
     )
+    private val whiteStack = Stack<Piece>()
+    private val redQueue = LinkedList<Piece>() as Queue<Piece>
     private var turn = 0
 
     private fun movePiece(num: Int, time: Int = 1): Boolean {
@@ -33,27 +35,25 @@ class `17837` {
         }
         when (board[nx][ny].color) {
             WHITE -> {
-                val stack = Stack<Piece>()
                 while (true) {
-                    val pop = board[x][y].pieces.removeLast()
-                    stack.push(pop)
+                    val pop = board[x][y].pieces.pop()
+                    whiteStack.push(pop)
                     pieces[pop.num].pos = Node(nx, ny)
                     if (pop.num == num) break
                 }
-                while (stack.isNotEmpty()) {
-                    board[nx][ny].pieces.addLast(pieces[stack.pop().num])
+                while (whiteStack.isNotEmpty()) {
+                    board[nx][ny].pieces.push(pieces[whiteStack.pop().num])
                 }
             }
             RED -> {
-                val queue = LinkedList<Piece>() as Queue<Piece>
                 while (true) {
-                    val pop = board[x][y].pieces.removeLast()
-                    queue.offer(pop)
+                    val pop = board[x][y].pieces.pop()
+                    redQueue.offer(pop)
                     pieces[pop.num].pos = Node(nx, ny)
                     if (pop.num == num) break
                 }
-                while (queue.isNotEmpty()) {
-                    board[nx][ny].pieces.addLast(pieces[queue.poll().num])
+                while (redQueue.isNotEmpty()) {
+                    board[nx][ny].pieces.push(pieces[redQueue.poll().num])
                 }
             }
         }
@@ -69,7 +69,7 @@ class `17837` {
         pieces = Array(k) { num ->
             val (x, y, dir) = readLine().split(" ").map { it.toInt() }
             val piece = Piece(num = num, dir = dir - 1, pos = Node(x - 1, y - 1))
-            board[x - 1][y - 1].pieces.addFirst(piece)
+            board[x - 1][y - 1].pieces.push(piece)
             piece
         }
         while (turn <= 1000) {
