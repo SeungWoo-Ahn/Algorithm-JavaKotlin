@@ -18,7 +18,7 @@ class `19236` {
     )
     private var answer = 0
 
-    private fun backtracking(map: Array<IntArray>, fish: Array<Fish?>, shark: Fish, sum: Int, depth: Int = 0) {
+    private fun backtracking(map: Array<IntArray>, fish: Array<Fish?>, shark: Fish, sum: Int) {
         val newMap = Array(4) { map[it].copyOf() }
         val movedFish = moveFish(newMap, fish, shark)
         var sharkMoved = false
@@ -32,7 +32,7 @@ class `19236` {
             val movedShark = Fish(Node(nx, ny), eatenFish.dir)
             newMap[nx][ny] = EMPTY
             movedFish[fishNum] = null
-            backtracking(newMap, movedFish, movedShark, sum + fishNum, depth + 1)
+            backtracking(newMap, movedFish, movedShark, sum + fishNum)
             newMap[nx][ny] = fishNum
             movedFish[fishNum] = eatenFish
         }
