@@ -1,55 +1,58 @@
 package boj.graph
 
+import java.util.LinkedList
+import java.util.Queue
 import java.util.StringTokenizer
 
 class `1043` {
+    private val party = Array(52) { mutableListOf<Int>() }
+    private val adj = Array(52) { mutableListOf<Int>() }
+    private val knowTruth = BooleanArray(52)
+
+    private fun bfs(n: Int) {
+        val q = LinkedList<Int>() as Queue<Int>
+        for (i in 1 .. n) {
+            if (knowTruth[i])
+                q.offer(i)
+        }
+        while (q.isNotEmpty()) {
+            val cur = q.poll()
+            for (nxt in adj[cur]) {
+                if (knowTruth[nxt]) continue
+                knowTruth[nxt] = true
+                q.offer(nxt)
+            }
+        }
+    }
+
     fun solution() = with(System.`in`.bufferedReader()) {
         val (n, m) = readLine().split(" ").map { it.toInt() }
         var st: StringTokenizer
         st = StringTokenizer(readLine())
-        val truthSize = st.nextToken().toInt()
-        if (truthSize == 0) {
-            println(m)
-            return
+        repeat(st.nextToken().toInt()) {
+            knowTruth[st.nextToken().toInt()] = true
         }
-        val checked = BooleanArray(n + 1)
-        repeat(truthSize) {
-            checked[st.nextToken().toInt()] = true
-        }
-        val knowTruth = ArrayDeque<Int>()
-        val party = mutableListOf<Pair<Int, IntArray>>()
         repeat(m) { idx ->
             st = StringTokenizer(readLine())
             val size = st.nextToken().toInt()
-            val members = IntArray(size) { st.nextToken().toInt() }
-            val canLie = !members.any { checked[it] }
-            if (canLie) party.add(idx to members)
-            else {
-                members.forEach {
-                    if (!checked[it]) {
-                        knowTruth.add(it)
-                    }
-                }
+            var prev = st.nextToken().toInt()
+            var nxt = 0
+            party[idx].add(prev)
+            repeat(size - 1) {
+                nxt = st.nextToken().toInt()
+                party[idx].add(nxt)
+                adj[prev].add(nxt)
+                adj[nxt].add(prev)
+                prev = nxt
             }
         }
-        while (knowTruth.isNotEmpty()) {
-            val num = knowTruth.removeFirst()
-            checked[num] = true
-            val removedParties = mutableListOf<Int>()
-            for (i in party.indices) {
-                if (party[i].second.contains(num)) {
-                    removedParties.add(party[i].first)
-                    for (member in party[i].second) {
-                        if (!checked[member])
-                            knowTruth.add(member)
-                    }
-                }
-            }
-            removedParties.forEach { idx ->
-                party.removeIf { it.first == idx }
-            }
+        bfs(n)
+        var cnt = 0
+        for (i in 0 until m) {
+            val known = party[i].any { knowTruth[it] }
+            if (!known) cnt++
         }
-        println(party.size)
+        println(cnt)
     }
 }
 
