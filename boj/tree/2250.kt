@@ -1,6 +1,5 @@
 package boj.tree
 
-import java.util.PriorityQueue
 import kotlin.math.max
 import kotlin.math.min
 
@@ -8,33 +7,37 @@ class `2250` {
     private var parent = intArrayOf()
     private var lc = intArrayOf()
     private var rc = intArrayOf()
-    private var posByLevel: Array<IntArray> = arrayOf()
+    private var leftPos = intArrayOf()
+    private var rightPos = intArrayOf()
     private var seq = 0
-    private var maxLevel = 0
-    private val pq = PriorityQueue<Pair<Int, Int>>(compareBy({ -it.second }, { it.first }))
 
-    private fun findRoot(cur: Int) {
-        if (parent[cur] == 0) {
-            inOrder(cur)
-            return
+    private fun findRoot(n: Int): Int {
+        for (i in 1 .. n) {
+            if (parent[i] == 0)
+                return i
         }
-        else findRoot(parent[cur])
+        return 0
     }
 
     private fun inOrder(cur: Int, level: Int = 1) {
         if (lc[cur] != EMPTY) inOrder(lc[cur], level + 1)
-        maxLevel = max(maxLevel, level)
         seq++
-        posByLevel[level][0] = min(posByLevel[level][0], seq)
-        posByLevel[level][1] = max(posByLevel[level][1], seq)
+        leftPos[level] = min(leftPos[level], seq)
+        rightPos[level] = max(rightPos[level], seq)
         if (rc[cur] != EMPTY) inOrder(rc[cur], level + 1)
     }
 
-    private fun findWidthByLevel() {
-        for (level in 1 .. maxLevel) {
-            val width = posByLevel[level][1] - posByLevel[level][0] + 1
-            pq.add(level to width)
+    private fun findMaxWidth(n: Int): Pair<Int, Int> {
+        var minLevel = 1
+        var maxWidth = 1
+        for (level in 1 .. n) {
+            val width = rightPos[level] - leftPos[level] + 1
+            if (width > maxWidth) {
+                minLevel = level
+                maxWidth = width
+            }
         }
+        return minLevel to maxWidth
     }
 
     fun solution() = with(System.`in`.bufferedReader()) {
@@ -42,25 +45,19 @@ class `2250` {
         parent = IntArray(n + 1)
         lc = IntArray(n + 1)
         rc = IntArray(n + 1)
-        posByLevel = Array(n + 1) {
-            IntArray(2) { i ->
-                if (i == 0) n
-                else 0
-            }
-        }
-        var leaf = EMPTY
+        leftPos = IntArray(n + 1) { n }
+        rightPos = IntArray(n + 1)
         repeat(n) {
-            val (node, l, r) = readLine().split(" ").map { it.toInt() }
-            if (l == EMPTY && r == EMPTY && leaf == EMPTY)
-                leaf = node
-            if (l != EMPTY) parent[l] = node
-            if (r != EMPTY) parent[r] = node
-            lc[node] = l
-            rc[node] = r
+            val (node, left, right) = readLine().split(" ").map { it.toInt() }
+            if (left != EMPTY) parent[left] = node
+            if (right != EMPTY) parent[right] = node
+            lc[node] = left
+            rc[node] = right
         }
-        findRoot(leaf)
-        findWidthByLevel()
-        println("${pq.peek().first} ${pq.peek().second}")
+        val root = findRoot(n)
+        inOrder(root)
+        val (level, width) = findMaxWidth(n)
+        println("$level $width")
     }
 
     companion object {
