@@ -52,7 +52,14 @@
 
 - [플로이드-워셜](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/floyd_warshall)
 
+
 - [다익스트라](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/dijkstra)
+
+
+- [KMP](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/kmp)
+
+
+- [트라이](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/trie)
 
 ## 프로그래머스
 
