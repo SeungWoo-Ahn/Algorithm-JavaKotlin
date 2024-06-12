@@ -5,6 +5,12 @@
 - [구현](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/Implement)
 
 
+- [배열](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/array)
+
+
+- [연결리스트](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/linkedlist)
+
+
 - [재귀](https://github.com/SeungWoo-Ahn/Algorithm-JavaKotlin/tree/main/boj/recursion)
 
 
