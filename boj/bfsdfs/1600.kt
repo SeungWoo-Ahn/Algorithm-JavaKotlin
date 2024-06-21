@@ -63,7 +63,6 @@ class `1600` {
         print(bfs(k, w, h))
     }
 }
-
 fun main() {
     `1600`().solution()
 }
