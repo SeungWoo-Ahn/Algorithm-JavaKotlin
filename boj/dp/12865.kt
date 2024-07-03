@@ -7,17 +7,15 @@ class `12865` {
             val (w, v) = readLine().splitToInt()
             w to v
         }
-        val dp = Array(n) { IntArray(k + 1) }
-        val (fw, fv) = things[0]
-        for (i in fw .. k) dp[0][i] = fv
-        for (i in 1 until n) {
-            val (w, v) = things[i]
+        val dp = Array(n + 1) { IntArray(k + 1) }
+        for (i in 1 .. n) {
+            val (w, v) = things[i - 1]
             for (j in 1 .. k) {
                 if (w > j) dp[i][j] = dp[i - 1][j]
                 else dp[i][j] = maxOf(dp[i - 1][j], v + dp[i - 1][j - w])
             }
         }
-        print(dp[n - 1][k])
+        print(dp[n][k])
     }
 
     private fun String.splitToInt() = split(" ").map { it.toInt() }
