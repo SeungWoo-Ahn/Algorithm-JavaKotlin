@@ -6,27 +6,13 @@ class `2239` {
     private data class Node(val x: Int, val y: Int)
 
     private val board = Array(9) { IntArray(9) }
+    private val rowExist = Array(9) { BooleanArray(10) }
+    private val colExist = Array(9) { BooleanArray(10) }
+    private val boxExist = Array(9) { BooleanArray(10) }
     private val unknown = mutableListOf<Node>()
 
-    private fun isPossible(x: Int, y: Int): Boolean {
-        for (i in 0 until 9) {
-            if (i != x && board[i][y] == board[x][y]) {
-                return false
-            }
-            if (i != y && board[x][i] == board[x][y]) {
-                return false
-            }
-        }
-        val sX = (x / 3) * 3
-        val sY = (y / 3) * 3
-        for (i in sX until sX + 3) {
-            for (j in sY until sY + 3) {
-                if (i == x && j == y) continue
-                if (board[i][j] == board[x][y])
-                    return false
-            }
-        }
-        return true
+    private fun boxIdx(x: Int, y: Int): Int {
+        return (x / 3) * 3 + (y / 3)
     }
 
     private fun backtracking(idx: Int) {
@@ -36,9 +22,17 @@ class `2239` {
         }
         for (i in 1..9) {
             val (x, y) = unknown[idx]
-            board[x][y] = i
-            if (isPossible(x, y)) backtracking(idx + 1)
-            board[x][y] = 0
+            if (!rowExist[x][i] && !colExist[y][i] && !boxExist[boxIdx(x, y)][i]) {
+                board[x][y] = i
+                rowExist[x][i] = true
+                colExist[y][i] = true
+                boxExist[boxIdx(x, y)][i] = true
+                backtracking(idx + 1)
+                board[x][y] = 0
+                rowExist[x][i] = false
+                colExist[y][i] = false
+                boxExist[boxIdx(x, y)][i] = false
+            }
         }
     }
 
@@ -48,20 +42,22 @@ class `2239` {
             for (y in 0 until 9) {
                 sb.append(board[x][y])
             }
-            if (x < 8) {
-                sb.append("\n")
-            }
+            sb.append("\n")
         }
         print(sb)
     }
 
     fun solution() = with(System.`in`.bufferedReader()) {
         repeat(9) { x ->
-            val line = readLine().toCharArray()
+            val line = readLine()
             repeat(9) { y ->
-                board[x][y] = line[y] - '0'
-                if (board[x][y] == 0) {
-                    unknown += Node(x, y)
+                val num = line[y] - '0'
+                board[x][y] = num
+                if (num == 0) unknown += Node(x, y)
+                else {
+                    rowExist[x][num] = true
+                    colExist[y][num] = true
+                    boxExist[boxIdx(x, y)][num] = true
                 }
             }
         }
