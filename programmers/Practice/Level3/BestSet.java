@@ -23,7 +23,9 @@ class BestSet {
     }
 
     public static void main(String[] args) {
-        int[] answer = solution(2, 9);
+        int n = 2;
+        int s = 9;
+        int[] answer = solution(n, s);
         System.out.println(Arrays.toString(answer));
     }
 }
