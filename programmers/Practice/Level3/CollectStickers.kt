@@ -6,21 +6,19 @@ class CollectStickers {
         if (n < 3) {
             return sticker.max()
         }
-        val dp1 = Array(n - 1) { IntArray(2) }
-        dp1[1][1] = sticker[0]
+        val dp1 = IntArray(n)
+        dp1[0] = sticker[0]
+        dp1[1] = sticker[0]
         for (i in 2 until n - 1) {
-            dp1[i][0] = dp1[i - 1][1] + sticker[i]
-            dp1[i][1] = maxOf(dp1[i - 1][0], dp1[i - 1][1])
+            dp1[i] = maxOf(dp1[i - 1], dp1[i - 2] + sticker[i])
         }
-        val dp2 = Array(n) { IntArray(2) }
-        dp2[1][0] = sticker[1]
+        val dp2 = IntArray(n)
+        dp2[0] = 0
+        dp2[1] = sticker[1]
         for (i in 2 until n) {
-            dp2[i][0] = dp2[i - 1][1] + sticker[i]
-            dp2[i][1] = maxOf(dp2[i - 1][0], dp2[i - 1][1])
+            dp2[i] = maxOf(dp2[i - 1], dp2[i - 2] + sticker[i])
         }
-        val dp1Max = maxOf(dp1[n - 2][0], dp1[n - 2][1])
-        val dp2Max = maxOf(dp2[n - 1][0], dp2[n - 1][1])
-        return maxOf(dp1Max, dp2Max)
+        return maxOf(dp1[n - 2], dp2[n - 1])
     }
 }
 
