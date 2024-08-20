@@ -18,10 +18,9 @@ class PopTheBalloon {
         }
         var answer = 2
         for (i in 1 until n - 1) {
-            var cnt = 0
-            if (a[i] > minFromLeft[i - 1]) cnt++
-            if (a[i] > minFromRight[i + 1]) cnt++
-            if (cnt < 2) answer++
+            if (a[i] < minFromLeft[i - 1] || a[i] < minFromRight[i + 1]) {
+                answer++
+            }
         }
         return answer
     }
