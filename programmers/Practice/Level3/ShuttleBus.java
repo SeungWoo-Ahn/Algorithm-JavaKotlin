@@ -57,7 +57,7 @@ class ShuttleBus {
         if (last.isEmpty() || last.size() < m) {
             answer = busTimes[n - 1];
         } else {
-            answer = last.getLast() - 1;
+            answer = last.get(last.size() - 1) - 1;
         }
         return getTime(answer);
     }
