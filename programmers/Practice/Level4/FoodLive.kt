@@ -1,4 +1,4 @@
-package programmers.Practice.Level3
+package programmers.Practice.Level4
 
 class FoodLive {
     fun solution(foodTimes: IntArray, k: Long): Int {
