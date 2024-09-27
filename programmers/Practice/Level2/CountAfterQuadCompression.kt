@@ -1,6 +1,7 @@
 package programmers.Practice.Level2
 
 class CountAfterQuadCompression {
+
     private class QuadCompression(private val arr: Array<IntArray>) {
         private val cnt = IntArray(2)
         private val dx = intArrayOf(0, 0, 1, 1)
