@@ -30,14 +30,14 @@ class TriangularSnail {
         }
 
         fun getSequence(): IntArray {
-            val sequence = IntArray(size)
+            val seq = IntArray(size)
             var idx = 0
             for (x in data.indices) {
                 for (y in data[x].indices) {
-                    sequence[idx++] = data[x][y]
+                    seq[idx++] = data[x][y]
                 }
             }
-            return sequence
+            return seq
         }
     }
 
