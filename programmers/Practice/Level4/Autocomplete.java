@@ -14,8 +14,13 @@ public class Autocomplete {
             this.child = new ArrayList<>();
         }
 
-        public boolean isSame(char c) {
-            return this.c == c;
+        public Node getNextNode(char c) {
+            for (Node cn: child) {
+                if (cn.c == c) {
+                    return cn;
+                }
+            }
+            return null;
         }
 
         public void increaseCnt() {
@@ -43,21 +48,12 @@ public class Autocomplete {
             return root[rootIdx];
         }
 
-        private Node getNextNode(Node node, char c) {
-            for (Node cn: node.child) {
-                if (cn.isSame(c)) {
-                    return cn;
-                }
-            }
-            return null;
-        }
-
         public void add(String word) {
             Node cur = getRootNode(word);
             cur.increaseCnt();
             for (int i = 1; i < word.length(); i++) {
                 char c = word.charAt(i);
-                Node nextNode = getNextNode(cur, c);
+                Node nextNode = cur.getNextNode(c);
                 if (nextNode == null) {
                     nextNode = new Node(c);
                     cur.child.add(nextNode);
@@ -73,7 +69,7 @@ public class Autocomplete {
             for (int i = 1; i < word.length(); i++) {
                 if (cur == null || cur.cnt == 1) break;
                 char c = word.charAt(i);
-                cur = getNextNode(cur, c);
+                cur = cur.getNextNode(c);
                 depth++;
             }
             return depth;
