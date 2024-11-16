@@ -23,13 +23,13 @@ class FindCollisionHazards {
             val (fx, fy) = points[route.last() - 1]
             history[fx][fy][time] = (history[fx][fy][time] ?: 0) + 1
         }
-        var collistions = 0
+        var collisions = 0
         for (x in 1..100) {
             for (y in 1..100) {
-                collistions += history[x][y].values.count { it > 1 }
+                collisions += history[x][y].values.count { it > 1 }
             }
         }
-        return collistions
+        return collisions
     }
 }
 
