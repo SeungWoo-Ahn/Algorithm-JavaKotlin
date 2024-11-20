@@ -70,7 +70,7 @@ class MergeTable {
         val value = getValue(root)
         val indexList = mutableListOf<Int>()
         for (tableIdx in table.indices) {
-            if (root == find(tableIdx)) {
+            if (find(tableIdx) == root) {
                 indexList += tableIdx
                 table[tableIdx] = if (tableIdx == index) value else EMPTY
             }
