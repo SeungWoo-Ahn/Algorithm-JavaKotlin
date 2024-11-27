@@ -1,7 +1,5 @@
 package pccp.exam1;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -19,7 +17,7 @@ public class Num4 {
         }
 
         @Override
-        public int compareTo(@NotNull Program o) {
+        public int compareTo(Program o) {
             if (score != o.score) {
                 return score - o.score;
             }
