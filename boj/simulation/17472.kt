@@ -19,8 +19,6 @@ class `17472` {
     private lateinit var map: Array<IntArray>
     private val bridgeList = mutableListOf<Bridge>()
     private lateinit var parent: IntArray
-    private val dx = intArrayOf(1, -1, 0, 0)
-    private val dy = intArrayOf(0, 0, 1, -1)
 
     private fun find(x: Int): Int {
         if (parent[x] == x) {
@@ -102,21 +100,15 @@ class `17472` {
     private fun numberingIslands() {
         val q = LinkedList<Pos>() as Queue<Pos>
         val visited = Array(n) { BooleanArray(m) }
+        val dx = intArrayOf(1, -1, 0, 0)
+        val dy = intArrayOf(0, 0, 1, -1)
         for (sx in map.indices) {
             for (sy in map[sx].indices) {
                 if (visited[sx][sy] || map[sx][sy] < 0) continue
-                var minX = n
-                var maxX = 0
-                var minY = m
-                var maxY = 0
                 q += Pos(sx, sy)
                 visited[sx][sy] = true
                 while (q.isNotEmpty()) {
                     val (x, y) = q.poll()
-                    minX = minOf(minX, x)
-                    maxX = maxOf(maxX, x)
-                    minY = minOf(minY, y)
-                    maxY = maxOf(maxY, y)
                     map[x][y] = islandCnt
                     for (i in 0 until 4) {
                         val nx = x + dx[i]
