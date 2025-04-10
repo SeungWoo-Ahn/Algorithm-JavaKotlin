@@ -8,8 +8,9 @@ class `2581` {
         isPrime[0] = false
         isPrime[1] = false
         for (base in 2..n) {
+            if (base * base > n) break
             if (isPrime[base].not()) continue
-            for (nxt in base * 2..n step base) {
+            for (nxt in base * base..n step base) {
                 isPrime[nxt] = false
             }
         }
