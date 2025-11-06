@@ -3,25 +3,25 @@ package boj.backtracking
 import java.util.StringTokenizer
 
 class `1182` {
-    private var arr = intArrayOf()
-    private var cnt = 0
-
-    private fun backtracking(n: Int, s: Int, depth: Int, total: Int) {
-        if (depth == n) {
-            if (total == s) cnt++
-            return
-        }
-        backtracking(n, s, depth + 1, total)
-        backtracking(n, s, depth + 1, total + arr[depth])
-    }
-
     fun solution() = with(System.`in`.bufferedReader()) {
-        val (N, S) = readLine().split(" ").map { it.toInt() }
+        val (n, s) = readLine().split(" ").map(String::toInt)
         val st = StringTokenizer(readLine())
-        arr = IntArray(N) { st.nextToken().toInt() }
-        backtracking(N, S, 0, 0)
-        if (S == 0) cnt--
-        println(cnt)
+        val arr = IntArray(n) { st.nextToken().toInt() }
+        var cnt = 0
+        for (bit in 1 until (1 shl n)) {
+            var sum = 0
+            var i = 0
+            while (bit shr i > 0) {
+                if ((bit shr i) and 1 == 1) {
+                    sum += arr[i]
+                }
+                i++
+            }
+            if (sum == s) {
+                cnt++
+            }
+        }
+        print(cnt)
     }
 }
 
